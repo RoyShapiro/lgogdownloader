@@ -735,17 +735,19 @@ void Downloader::repair()
             }
         }
 
-	int iAttemptCountDJ = 0; //init at zero
-	Config gConf = Globals::globalConfig; //get a globalConfig pointer
+        int iAttemptCountDJ = 0; //init at zero
+        Config gConf = Globals::globalConfig; //get a globalConfig pointer
         Json::Value downlinkJson = gogGalaxy->getResponseJson(vGameFiles[i].galaxy_downlink_json_url);
-	if(downlinkJson.empty()&&gConf.iRetries>0){
-		while(iAttemptCountDJ < gConf.iRetries){
-			std::cerr << "Empty JSON response, retrying, attempt " << iAttemptCountDJ + 1 << " out of " << gConf.iRetries << std::endl;
-			downlinkJson = gogGalaxy->getResponseJson(vGameFiles[i].galaxy_downlink_json_url);
-			iAttemptCountDJ++; //increase counter
-			if(!downlinkJson.empty()) break; //done, exit
-		}
-	}
+        if (downlinkJson.empty()&&gConf.iRetries>0)
+        {
+                while (iAttemptCountDJ < gConf.iRetries)
+                {
+                        std::cerr << "Empty JSON response, retrying, attempt " << iAttemptCountDJ + 1 << " out of " << gConf.iRetries << std::endl;
+                        downlinkJson = gogGalaxy->getResponseJson(vGameFiles[i].galaxy_downlink_json_url);
+                        iAttemptCountDJ++; //increase counter
+                        if (!downlinkJson.empty()) break; //done, exit
+                }
+        }
 
         if (downlinkJson.empty())
         {
@@ -2622,17 +2624,19 @@ void Downloader::processDownloadQueue(Config conf, const unsigned int& tid)
         }
 
         // Get downlink JSON from Galaxy API
-	int iAttemptCountDJ = 0; //init at zero                                               
-	Config gConf = Globals::globalConfig; //get a globalConfig pointer
+        int iAttemptCountDJ = 0; //init at zero                                               
+        Config gConf = Globals::globalConfig; //get a globalConfig pointer
         Json::Value downlinkJson = galaxy->getResponseJson(gf.galaxy_downlink_json_url);
-	if(downlinkJson.empty()&&gConf.iRetries>0){
-		while(iAttemptCountDJ < gConf.iRetries){
-			msgQueue.push(Message("Empty JSON response, retrying, attempt " + std::to_string(iAttemptCountDJ + 1) + " out of " + std::to_string(gConf.iRetries), MSGTYPE_WARNING, msg_prefix));
-			downlinkJson = galaxy->getResponseJson(gf.galaxy_downlink_json_url);
-			iAttemptCountDJ++; //increase counter
-			if(!downlinkJson.empty()) break; //done, exit
-		}
-	}
+        if (downlinkJson.empty()&&gConf.iRetries>0)
+        {
+                while (iAttemptCountDJ < gConf.iRetries)
+                {
+                        msgQueue.push(Message("Empty JSON response, retrying, attempt " + std::to_string(iAttemptCountDJ + 1) + " out of " + std::to_string(gConf.iRetries), MSGTYPE_WARNING, msg_prefix));
+                        downlinkJson = galaxy->getResponseJson(gf.galaxy_downlink_json_url);
+                        iAttemptCountDJ++; //increase counter
+                        if (!downlinkJson.empty()) break; //done, exit
+                }
+        }
 
         if (downlinkJson.empty())
         {
